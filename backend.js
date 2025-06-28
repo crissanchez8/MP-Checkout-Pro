@@ -57,9 +57,6 @@ app.post('/crear-preferencia', async (req, res) => {
             pending: 'https://www.crissanchez.me/pendiente',
         },
         auto_return: 'approved',
-        payment_methods: {
-            installments: 3,
-        },
     };
 
     try {
