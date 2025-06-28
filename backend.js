@@ -1,12 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-const app = express();
 const axios = require('axios');
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
-const ACCESS_TOKEN = process.env.PROD_ACCESS_TOKEN;
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
 app.post('/crear-preferencia', async (req, res) => {
     try {
@@ -20,9 +20,9 @@ app.post('/crear-preferencia', async (req, res) => {
                 },
             ],
             back_urls: {
-                success: 'https://crissanchez.me/gracias',
-                failure: 'https://crissanchez.me/error',
-                pending: 'https://crissanchez.me/pendiente',
+                success: 'https://www.crissanchez.me/gracias',
+                failure: 'https://www.crissanchez.me/error',
+                pending: 'https://www.crissanchez.me/pendiente',
             },
             auto_return: 'approved',
         };
@@ -40,9 +40,12 @@ app.post('/crear-preferencia', async (req, res) => {
 
         res.json({ init_point: response.data.init_point });
     } catch (error) {
-        console.error(error.response?.data || error.message);
+        console.error('Error:', error.response?.data || error.message);
         res.status(500).json({ error: 'Error al crear preferencia' });
     }
 });
 
-app.listen(3000, () => console.log('Servidor en http://localhost:3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en puerto ${PORT}`);
+});
