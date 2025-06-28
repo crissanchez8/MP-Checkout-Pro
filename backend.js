@@ -9,6 +9,7 @@ app.use(express.json());
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
 app.post('/crear-preferencia', async (req, res) => {
+    console.log('🟡 Body recibido en /crear-preferencia:', req.body);
     const cursoElegido = req.body.curso?.toLowerCase(); // 🔒 robustez máxima
     console.log('Curso recibido:', cursoElegido);
 
