@@ -52,9 +52,9 @@ app.post('/crear-preferencia', async (req, res) => {
             },
         ],
         back_urls: {
-            success: `https://crissanchez.webflow.io/gracias/${cursoElegido}`,
-            failure: 'https://crissanchez.webflow.io/error',
-            pending: 'https://crissanchez.webflow.io/pendiente',
+            success: `https://crissanchez.me/gracias/${cursoElegido}`,
+            failure: 'https://crissanchez.me/error',
+            pending: 'https://crissanchez.me/pendiente',
         },
         auto_return: 'approved',
     };
