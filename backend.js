@@ -51,7 +51,7 @@ app.post('/crear-preferencia', async (req, res) => {
                 Nombre: nombre,
                 Apellido: apellido,
                 Telefono: telefono,
-                Email: 'lala@lele.com',
+                Email: email,
                 curso: cursoElegido,
             }
         );
