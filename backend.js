@@ -40,6 +40,27 @@ app.post('/crear-preferencia', async (req, res) => {
         return res.status(400).json({ error: 'Curso inválido' });
     }
 
+    // 👤 Extraer los datos del formulario
+    const { nombre, apellido, telefono, email } = req.body;
+
+    // 📬 Enviar a Zapier
+    try {
+        await axios.post(
+            'https://hooks.zapier.com/hooks/catch/21712666/u2t89tf/',
+            {
+                nombre,
+                apellido,
+                telefono,
+                email,
+                curso: cursoElegido,
+            }
+        );
+        console.log('✅ Datos enviados a Zapier');
+    } catch (zapierError) {
+        console.warn('⚠️ No se pudo contactar a Zapier:', zapierError.message);
+        // No cortamos el flujo, solo avisamos
+    }
+
     const preference = {
         items: [
             {
