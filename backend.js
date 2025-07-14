@@ -48,10 +48,10 @@ app.post('/crear-preferencia', async (req, res) => {
         await axios.post(
             'https://hooks.zapier.com/hooks/catch/21712666/u2t89tf/',
             {
-                nombre,
-                apellido,
-                telefono,
-                email,
+                Nombre: nombre,
+                Apellido: apellido,
+                Telefono: telefono,
+                Email: email,
                 curso: cursoElegido,
             }
         );
