@@ -46,7 +46,7 @@ app.post('/crear-preferencia', async (req, res) => {
     // 📬 Enviar a Zapier
     try {
         await axios.post(
-            'https://hooks.zapier.com/hooks/catch/21712666/u2t89tf/',
+            'https://hooks.zapier.com/hooks/catch/21712666/u2t89tf',
             {
                 Nombre: nombre,
                 Apellido: apellido,
@@ -55,6 +55,13 @@ app.post('/crear-preferencia', async (req, res) => {
                 curso: cursoElegido,
             }
         );
+        console.log({
+            nombre,
+            apellido,
+            telefono,
+            email,
+            cursoElegido,
+        });
         console.log('✅ Datos enviados a Zapier');
     } catch (zapierError) {
         console.warn('⚠️ No se pudo contactar a Zapier:', zapierError.message);
