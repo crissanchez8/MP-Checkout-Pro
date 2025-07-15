@@ -3,8 +3,16 @@ const cors = require('cors');
 const axios = require('axios');
 const { google } = require('googleapis');
 
+const rawCredentials = process.env.GOOGLE_CREDENTIALS;
+
+function getParsedCredentials() {
+    const credentials = JSON.parse(rawCredentials);
+    credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+    return credentials;
+}
+
 const auth = new google.auth.GoogleAuth({
-    keyFile: '/etc/secrets/GOOGLE_CREDENTIALS',
+    credentials: getParsedCredentials(),
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
