@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const { google } = require('googleapis');
 
 const app = express();
 app.use(cors());
@@ -11,39 +10,7 @@ const credentialsRaw = process.env.GOOGLE_CREDENTIALS;
 const credentials = JSON.parse(credentialsRaw);
 credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
 
-const auth = new google.auth.GoogleAuth({
-    credentials,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-});
-
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
-const SPREADSHEET_ID = '1MpCCIYVz4eEY-UEhB5u-ET0RR4NYthMN130Z8ysXgjc';
-const SHEET_NAME = 'Respuestas'; // o el nombre de la pestaña
-
-async function agregarAFila({ nombre, apellido, telefono, email, curso }) {
-    const client = await auth.getClient();
-    const sheets = google.sheets({ version: 'v4', auth: client });
-
-    const valores = [
-        [
-            new Date().toLocaleString(), // Timestamp
-            nombre,
-            apellido,
-            telefono,
-            email,
-            curso,
-        ],
-    ];
-
-    await sheets.spreadsheets.values.append({
-        spreadsheetId: SPREADSHEET_ID,
-        range: `${SHEET_NAME}!A1`, // Asegurate que la hoja exista
-        valueInputOption: 'USER_ENTERED',
-        resource: {
-            values: valores,
-        },
-    });
-}
 
 app.post('/crear-preferencia', async (req, res) => {
     console.log('🟡 Body recibido en /crear-preferencia:', req.body);
@@ -81,21 +48,13 @@ app.post('/crear-preferencia', async (req, res) => {
     const { nombre, apellido, telefono, email } = req.body;
 
     // 📬 Enviar a Sheets
-    try {
-        await agregarAFila({
-            nombre,
-            apellido,
-            telefono,
-            email,
-            curso: cursoElegido,
-        });
-        console.log('✅ Datos enviados a Google Sheets');
-    } catch (sheetsError) {
-        console.warn(
-            '⚠️ No se pudo enviar a Google Sheets:',
-            sheetsError.message
-        );
-    }
+    await axios.post('https://sheetdb.io/api/v1/1t0ntd4d4686t', {
+        data: {
+            nombre: 'Cris',
+            email: 'cris@example.com',
+            curso: 'product-fundamentals',
+        },
+    });
 
     const preference = {
         items: [
