@@ -6,10 +6,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const credentialsRaw = process.env.GOOGLE_CREDENTIALS;
-const credentials = JSON.parse(credentialsRaw);
-credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
-
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
 app.post('/crear-preferencia', async (req, res) => {
