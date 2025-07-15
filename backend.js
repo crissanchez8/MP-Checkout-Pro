@@ -47,8 +47,7 @@ app.post('/crear-preferencia', async (req, res) => {
     await axios.post('https://sheetdb.io/api/v1/1t0ntd4d4686t', {
         data: {
             Nombre: nombre,
-            Apellido,
-            apellido,
+            Apellido: apellido,
             Telefono: '1125634661',
             Email: email,
             Curso: cursoElegido,
