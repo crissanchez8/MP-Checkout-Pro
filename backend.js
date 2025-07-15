@@ -1,12 +1,45 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const { google } = require('googleapis');
+
+const auth = new google.auth.GoogleAuth({
+    keyFile: process.env.GOOGLE_CREDENTIALS,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+});
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+const SPREADSHEET_ID = '1MpCCIYVz4eEY-UEhB5u-ET0RR4NYthMN130Z8ysXgjc';
+const SHEET_NAME = 'Respuestas'; // o el nombre de la pestaña
+
+async function agregarAFila({ nombre, apellido, telefono, email, curso }) {
+    const client = await auth.getClient();
+    const sheets = google.sheets({ version: 'v4', auth: client });
+
+    const valores = [
+        [
+            new Date().toLocaleString(), // Timestamp
+            nombre,
+            apellido,
+            telefono,
+            email,
+            curso,
+        ],
+    ];
+
+    await sheets.spreadsheets.values.append({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${SHEET_NAME}!A1`, // Asegurate que la hoja exista
+        valueInputOption: 'USER_ENTERED',
+        resource: {
+            values: valores,
+        },
+    });
+}
 
 app.post('/crear-preferencia', async (req, res) => {
     console.log('🟡 Body recibido en /crear-preferencia:', req.body);
@@ -43,29 +76,21 @@ app.post('/crear-preferencia', async (req, res) => {
     // 👤 Extraer los datos del formulario
     const { nombre, apellido, telefono, email } = req.body;
 
-    // 📬 Enviar a Zapier
+    // 📬 Enviar a Sheets
     try {
-        await axios.post(
-            'https://hooks.zapier.com/hooks/catch/21712666/u2t89tf',
-            {
-                Nombre: nombre,
-                Apellido: apellido,
-                Telefono: telefono,
-                Email: email,
-                curso: cursoElegido,
-            }
-        );
-        console.log({
+        await agregarAFila({
             nombre,
             apellido,
             telefono,
             email,
-            cursoElegido,
+            curso: cursoElegido,
         });
-        console.log('✅ Datos enviados a Zapier');
-    } catch (zapierError) {
-        console.warn('⚠️ No se pudo contactar a Zapier:', zapierError.message);
-        // No cortamos el flujo, solo avisamos
+        console.log('✅ Datos enviados a Google Sheets');
+    } catch (sheetsError) {
+        console.warn(
+            '⚠️ No se pudo enviar a Google Sheets:',
+            sheetsError.message
+        );
     }
 
     const preference = {
