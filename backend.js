@@ -4,7 +4,7 @@ const axios = require('axios');
 const { google } = require('googleapis');
 
 const auth = new google.auth.GoogleAuth({
-    keyFile: process.env.GOOGLE_CREDENTIALS,
+    keyFile: '/etc/secrets/GOOGLE_CREDENTIALS',
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
