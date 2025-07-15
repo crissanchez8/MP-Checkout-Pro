@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const auth = new google.auth.GoogleAuth({
-    keyFile: 'etc/secrets/GOOGLE_CREDENTIALS',
+    keyFile: '/etc/secrets/GOOGLE_CREDENTIALS',
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
