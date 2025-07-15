@@ -3,14 +3,14 @@ const cors = require('cors');
 const axios = require('axios');
 const { google } = require('googleapis');
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+
 const auth = new google.auth.GoogleAuth({
     keyFile: 'etc/secrets/GOOGLE_CREDENTIALS',
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
-
-const app = express();
-app.use(cors());
-app.use(express.json());
 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const SPREADSHEET_ID = '1MpCCIYVz4eEY-UEhB5u-ET0RR4NYthMN130Z8ysXgjc';
