@@ -16,7 +16,7 @@ app.post('/crear-preferencia', async (req, res) => {
     const cursosDisponibles = {
         'product-fundamentals': {
             title: 'Curso Product Fundamentals',
-            unit_price: 80000,
+            unit_price: 66000,
             description:
                 'Un curso intensivo para aprender las bases del rol de Product Manager.',
             picture_url:
