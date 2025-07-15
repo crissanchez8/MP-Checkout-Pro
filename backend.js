@@ -7,8 +7,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const credentialsRaw = process.env.GOOGLE_CREDENTIALS;
+const credentials = JSON.parse(credentialsRaw);
+credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+
 const auth = new google.auth.GoogleAuth({
-    keyFile: '/etc/secrets/GOOGLE_CREDENTIALS',
+    credentials,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
