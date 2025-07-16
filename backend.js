@@ -42,15 +42,23 @@ app.post('/crear-preferencia', async (req, res) => {
 
     // 👤 Extraer los datos del formulario
     const { nombre, apellido, telefono, email } = req.body;
+    const today = new Date();
+
+    const day = today.getDate().toString().padStart(2, '0');
+    const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Mes comienza en 0
+    const year = today.getFullYear();
+
+    const fechaFormateada = `${day}/${month}/${year}`;
 
     // 📬 Enviar a Sheets
     await axios.post('https://sheetdb.io/api/v1/1t0ntd4d4686t', {
         data: {
             Nombre: nombre,
             Apellido: apellido,
-            Telefono: '1125634661',
+            Telefono: telefono,
             Email: email,
             Curso: cursoElegido,
+            Fecha: fechaFormateada,
         },
     });
 
@@ -66,7 +74,7 @@ app.post('/crear-preferencia', async (req, res) => {
             },
         ],
         back_urls: {
-            success: `https://crissanchez.me/gracias/${cursoElegido}`,
+            success: `https://crissanchez.webflow.io/gracias/${cursoElegido}`,
             failure: 'https://crissanchez.me/error',
             pending: 'https://crissanchez.me/pendiente',
         },
