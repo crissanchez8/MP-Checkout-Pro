@@ -59,6 +59,7 @@ app.post('/crear-preferencia', async (req, res) => {
             Email: email,
             Curso: cursoElegido,
             Fecha: fechaFormateada,
+            Status: 'LEAD',
         },
     });
 
