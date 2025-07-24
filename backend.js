@@ -79,6 +79,8 @@ app.post('/crear-preferencia', async (req, res) => {
             pending: 'https://www.crissanchez.me/pendiente',
         },
         auto_return: 'approved',
+        notification_url: 'https://www.crissanchez.me/webhooks/mercadopago',
+        external_reference: email,
     };
 
     try {
@@ -103,6 +105,11 @@ app.post('/crear-preferencia', async (req, res) => {
             error: 'No se pudo crear la preferencia de pago',
         });
     }
+});
+
+app.post('/webhooks/mercadopago', (req, res) => {
+    console.log('🔔 Webhook recibido:', req.body);
+    res.sendStatus(200); // MercadoPago espera un 200 OK
 });
 
 const PORT = process.env.PORT || 3000;
