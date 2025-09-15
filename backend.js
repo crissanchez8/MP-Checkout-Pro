@@ -24,7 +24,7 @@ app.post('/crear-preferencia', async (req, res) => {
         },
         'product-analytics-con-amplitude': {
             title: 'Curso Product Analytics',
-            unit_price: 150000,
+            unit_price: 148000,
             description:
                 'Aprendé a medir y tomar decisiones basadas en datos con herramientas modernas.',
             picture_url:
