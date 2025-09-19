@@ -40,7 +40,21 @@ app.post('/crear-preferencia', async (req, res) => {
         },
     };
 
+    const cuponesValidos = {
+        LORA1234: 0.5,
+    };
+
     const curso = cursosDisponibles[cursoElegido];
+
+    let descuento = 0;
+    let cupon = req.body.cupon?.toUpperCase();
+
+    if (cupon && cuponesValidos[cupon]) {
+        const valor = cuponesValidos[cupon];
+        descuento = valor < 1 ? curso.unit_price * valor : valor; // porcentaje vs monto fijo
+    }
+
+    const finalPrice = curso.unit_price - descuento;
 
     if (!curso) {
         // En lugar de enviar error, podés redirigir, loguear o devolver un fallback si querés
@@ -77,10 +91,20 @@ app.post('/crear-preferencia', async (req, res) => {
                 title: curso.title,
                 description: curso.description,
                 quantity: 1,
-                unit_price: curso.unit_price,
+                unit_price: finalPrice,
                 currency_id: 'ARS',
                 picture_url: curso.picture_url,
             },
+            ...(descuento > 0
+                ? [
+                      {
+                          title: `Descuento ${cupon}`,
+                          quantity: 1,
+                          unit_price: -descuento,
+                          currency_id: 'ARS',
+                      },
+                  ]
+                : []),
         ],
         back_urls: {
             success: `https://www.crissanchez.me/gracias/${cursoElegido}`,
