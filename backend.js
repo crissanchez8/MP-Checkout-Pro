@@ -95,16 +95,6 @@ app.post('/crear-preferencia', async (req, res) => {
                 currency_id: 'ARS',
                 picture_url: curso.picture_url,
             },
-            ...(descuento > 0
-                ? [
-                      {
-                          title: `Descuento ${cupon}`,
-                          quantity: 1,
-                          unit_price: -descuento,
-                          currency_id: 'ARS',
-                      },
-                  ]
-                : []),
         ],
         back_urls: {
             success: `https://www.crissanchez.me/gracias/${cursoElegido}`,
