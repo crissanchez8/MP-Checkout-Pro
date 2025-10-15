@@ -32,7 +32,7 @@ app.post('/crear-preferencia', async (req, res) => {
         },
         'estrategia-de-producto': {
             title: 'Curso Estrategia de Producto',
-            unit_price: 177600,
+            unit_price: 155400,
             description:
                 'Descubre como crear, sostener e iterar una estrategia de producto que conecte la visión del negocio, objetivos, métricas y expectativas de stakeholders con la ejecución diaria de ideas, proyectos e iniciativas.',
             picture_url:
