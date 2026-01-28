@@ -24,7 +24,7 @@ app.post('/crear-preferencia', async (req, res) => {
         },
         'product-analytics-con-amplitude': {
             title: 'Curso Product Analytics',
-            unit_price: 180000,
+            unit_price: 240000,
             description:
                 'Aprendé a medir y tomar decisiones basadas en datos con herramientas modernas.',
             picture_url:
@@ -40,7 +40,7 @@ app.post('/crear-preferencia', async (req, res) => {
         },
         'product-discovery-con-jobs-to-be-done': {
             title: 'Product Discovery con Jobs-to-be-done',
-            unit_price: 240000,
+            unit_price: 180000,
             description:
                 'Aprende a descubrir necesidades de tus usuarios, transformarlas en oportunidades de negocio y validar tus ideas para reducir riesgo de mercado.',
             picture_url:
